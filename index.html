@@ -3,519 +3,321 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#080b18">
-<title>ZAL TikTok Region Checker</title>
+<meta name="theme-color" content="#070b18">
+<title>ZAL TikTok Profile Checker</title>
 
 <style>
 *{box-sizing:border-box}
 body{
-  margin:0;background:#080b18;color:#f4f6ff;
-  font-family:Arial,sans-serif;min-height:100vh;
+  margin:0;
+  min-height:100vh;
+  padding:22px 14px;
+  color:#f4f7ff;
+  font-family:Arial,sans-serif;
+  background:radial-gradient(ellipse at top,#14294b 0%,#080d1b 48%,#050711 100%);
 }
-.container{max-width:700px;margin:auto;padding:20px 15px 40px}
-header{display:flex;align-items:center;gap:12px;margin-bottom:30px}
+.container{max-width:520px;margin:auto}
 .logo{
-  width:48px;height:48px;border-radius:15px;
-  display:grid;place-items:center;font-size:26px;font-weight:900;
-  background:linear-gradient(135deg,#00d9ff,#9875ff);color:#080b18
+  text-align:center;font-size:34px;font-weight:900;
+  letter-spacing:4px;color:#53e5ff;
+  text-shadow:0 0 20px #00bfff55;margin-top:14px
 }
-h1{font-size:17px;margin:0}
-header p{font-size:10px;color:#929fbd;letter-spacing:1px;margin:5px 0}
-.hero h2{font-size:35px;line-height:1.15;margin:12px 0}
-.hero h2 span{color:#00d9ff}
-.hero p{font-size:13px;line-height:1.7;color:#929fbd}
+.subtitle{text-align:center;color:#9caecb;margin:8px 0 24px;font-size:13px}
 .card{
-  margin-top:22px;padding:17px;border-radius:17px;
-  background:#11182b;border:1px solid #283653
+  background:#101a2deF;border:1px solid #253957;
+  border-radius:20px;padding:20px;margin-bottom:15px;
+  box-shadow:0 12px 35px #0005
 }
-label{display:block;font-size:12px;font-weight:bold;margin-bottom:10px}
-.input{
-  width:100%;padding:15px;border-radius:11px;
-  background:#080d1b;border:1px solid #30405f;
-  color:white;font-size:15px;outline:none
+h2{font-size:18px;margin:0 0 8px}
+.description{font-size:13px;line-height:1.6;color:#9eafc9;margin:0 0 17px}
+label{display:block;font-size:13px;margin-bottom:8px;color:#d9e6ff}
+.input-wrap{display:flex;align-items:center;background:#080f1e;border:1px solid #2b4264;border-radius:12px;padding:0 12px}
+.at{color:#57dfff;font-weight:bold}
+input{
+  width:100%;padding:15px 10px;background:transparent;border:0;
+  outline:none;color:white;font-size:16px;min-width:0
 }
-.input:focus{border-color:#00d9ff}
-button{cursor:pointer}
-.main{
-  width:100%;padding:15px;margin-top:13px;border:0;
-  border-radius:11px;background:linear-gradient(100deg,#00d9ff,#a28aff);
-  color:#07101c;font-size:14px;font-weight:900
+button{font-family:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#checkBtn{
+  width:100%;margin-top:14px;padding:16px;border:0;border-radius:12px;
+  color:#06101d;font-weight:900;font-size:15px;
+  background:linear-gradient(100deg,#48e5ff,#55a5ff);
+  box-shadow:0 5px 20px #39cfff22
 }
-.main:disabled{opacity:.65}
-.status{
-  display:none;padding:14px;margin-top:15px;border-radius:11px;
-  background:#11182b;border:1px solid #30405f;
-  font-size:12px;line-height:1.7;overflow-wrap:anywhere
+#checkBtn:disabled{opacity:.65;cursor:wait}
+#status{
+  display:none;margin-top:14px;padding:12px;border-radius:10px;
+  font-size:13px;line-height:1.5;overflow-wrap:anywhere
 }
-.status.show{display:block}
-.error{color:#ff9aae!important;border-color:#ff637f!important}
-.success{color:#38e8a7!important;border-color:#38e8a7!important}
-.muted{font-size:11px;line-height:1.7;color:#929fbd}
-.results{display:none;margin-top:24px}
-.results.show{display:block}
-.profile{
-  padding:17px;border-radius:16px;
-  background:#151e34;border:1px solid #30405b
-}
-.profile-top{display:flex;gap:13px;align-items:center}
+#status.info{display:block;background:#112944;color:#9ceaff;border:1px solid #24496b}
+#status.error{display:block;background:#351923;color:#ffb6c0;border:1px solid #71313f}
+#status.success{display:block;background:#123126;color:#a4ffcd;border:1px solid #246648}
+.results{display:none}
+.profile{display:flex;gap:13px;align-items:center;margin-bottom:17px}
 .avatar{
-  width:65px;height:65px;flex-shrink:0;
-  border-radius:50%;object-fit:cover;background:#26324d
+  width:55px;height:55px;flex-shrink:0;border-radius:50%;
+  background:linear-gradient(135deg,#36ddff,#7765ff);
+  display:grid;place-items:center;font-size:24px;font-weight:bold;color:#07101e
 }
-.profile h3{font-size:18px;margin:0;overflow-wrap:anywhere}
-.profile p{font-size:12px;color:#929fbd;overflow-wrap:anywhere}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:15px 0}
-.stat,.details{
-  background:#11182b;border:1px solid #ffffff12;border-radius:13px;padding:14px
-}
-.stat small{font-size:11px;color:#929fbd}
-.value{font-size:22px;font-weight:900;margin-top:10px;overflow-wrap:anywhere}
-.blue{color:#00d9ff}.pink{color:#ff80b8}
-.purple{color:#b5a0ff}.green{color:#38e8a7}
-.details{padding:0;margin-top:15px}
-.details h3{font-size:13px;padding:14px;margin:0;border-bottom:1px solid #ffffff12}
-.row{
-  display:flex;justify-content:space-between;gap:12px;
-  padding:12px 14px;border-bottom:1px solid #ffffff09;font-size:12px
-}
-.row:last-child{border:0}
-.row span:first-child{color:#929fbd}
-.row span:last-child{text-align:right;overflow-wrap:anywhere}
-.actions{display:flex;gap:8px;margin-top:15px}
-.secondary{
-  flex:1;padding:11px;border-radius:9px;
-  background:#18233b;color:white;border:1px solid #344360;font-size:11px
-}
-footer{text-align:center;font-size:10px;color:#6f7b98;margin-top:30px;line-height:1.8}
-@media(min-width:520px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.profile-name{font-size:17px;font-weight:bold;overflow-wrap:anywhere}
+.profile-user{font-size:13px;color:#9aafce;margin-top:5px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.metric{background:#091323;border:1px solid #20324c;border-radius:12px;padding:13px;min-width:0}
+.metric-name{font-size:11px;color:#8da3c3;margin-bottom:8px}
+.metric-value{font-size:17px;font-weight:bold;overflow-wrap:anywhere}
+.note{font-size:12px;color:#8296b5;line-height:1.6;margin:15px 0 0}
+.footer{text-align:center;color:#60738f;font-size:11px;padding:10px}
+.hidden{display:none!important}
 </style>
 </head>
+
 <body>
+<main class="container">
+  <div class="logo">ZAL</div>
+  <div class="subtitle">TIKTOK PROFILE CHECKER</div>
 
-<div class="container">
-<header>
-  <div class="logo">Z</div>
-  <div>
-    <h1>ZAL ANALYTICS</h1>
-    <p>TIKTOK REGION CHECKER</p>
-  </div>
-</header>
+  <section class="card">
+    <h2> Cek Profil TikTok</h2>
+    <p class="description">
+      Masukkan username TikTok untuk mencoba mengambil statistik profil yang tersedia.
+    </p>
 
-<section class="hero">
-  <h2>Discover TikTok<br><span>Profile Data.</span></h2>
-  <p>
-    Masukkan username untuk memeriksa data profil publik,
-    statistik akun, dan informasi lain yang tersedia.
-  </p>
-</section>
+    <label for="username">Username TikTok</label>
+    <div class="input-wrap">
+      <span class="at">@</span>
+      <input id="username" type="text" value="wtfk263"
+        placeholder="contoh: username" autocomplete="off"
+        autocapitalize="none" spellcheck="false">
+    </div>
 
-<section class="card">
-  <label for="username">USERNAME ATAU LINK TIKTOK</label>
-  <input class="input" id="username" value="wtfk263"
-         placeholder="@username" autocomplete="off" spellcheck="false">
-  <button class="main" id="checkBtn" type="button">
-    🔍 CEK PROFIL SEKARANG
-  </button>
-  <p class="muted">Contoh username: @wtfk263</p>
-</section>
+    <button id="checkBtn" type="button">CEK PROFIL SEKARANG</button>
+    <div id="status" role="status" aria-live="polite"></div>
+  </section>
 
-<div id="status" class="status" role="status" aria-live="polite"></div>
-
-<section id="results" class="results">
-  <h3>📊 Hasil Profil</h3>
-  <div class="profile">
-    <div class="profile-top">
-      <img class="avatar" id="avatar" alt="Foto profil">
+  <section id="results" class="card results">
+    <div class="profile">
+      <div class="avatar" id="avatar">T</div>
       <div>
-        <h3 id="nickname">-</h3>
-        <p id="handle">@-</p>
-        <div id="region" class="blue">Region: Tidak tersedia</div>
+        <div class="profile-name" id="nickname">-</div>
+        <div class="profile-user" id="handle">@-</div>
       </div>
     </div>
-    <p id="bio"></p>
-    <div class="actions">
-      <button class="secondary" id="openBtn">BUKA PROFIL</button>
-      <button class="secondary" id="copyBtn">SALIN HASIL</button>
+
+    <div class="grid">
+      <div class="metric"><div class="metric-name">USER ID</div><div class="metric-value" id="userId">-</div></div>
+      <div class="metric"><div class="metric-name">FOLLOWERS</div><div class="metric-value" id="followers">-</div></div>
+      <div class="metric"><div class="metric-name">FOLLOWING</div><div class="metric-value" id="following">-</div></div>
+      <div class="metric"><div class="metric-name">HEART / LIKES</div><div class="metric-value" id="hearts">-</div></div>
+      <div class="metric"><div class="metric-name">VIDEO</div><div class="metric-value" id="videos">-</div></div>
+      <div class="metric"><div class="metric-name">FRIENDS</div><div class="metric-value" id="friends">-</div></div>
+      <div class="metric"><div class="metric-name">HEART PER FOLLOWER</div><div class="metric-value" id="heartRatio">-</div></div>
+      <div class="metric"><div class="metric-name">EST. ENGAGEMENT</div><div class="metric-value" id="engagement">-</div></div>
+      <div class="metric"><div class="metric-name">AKUN BERGABUNG</div><div class="metric-value" id="joined">Tidak tersedia</div></div>
+      <div class="metric"><div class="metric-name">BAHASA</div><div class="metric-value" id="language">Tidak tersedia</div></div>
+      <div class="metric"><div class="metric-name">UPDATE NICKNAME</div><div class="metric-value" id="nicknameUpdate">Tidak tersedia</div></div>
+      <div class="metric"><div class="metric-name">UPDATE USERNAME</div><div class="metric-value" id="usernameUpdate">Tidak tersedia</div></div>
     </div>
-  </div>
 
-  <div class="grid">
-    <div class="stat"><small>👥 Followers</small><div class="value blue" id="followers">-</div></div>
-    <div class="stat"><small>❤️ Heart</small><div class="value pink" id="hearts">-</div></div>
-    <div class="stat"><small>🎬 Video</small><div class="value purple" id="videos">-</div></div>
-    <div class="stat"><small>➕ Following</small><div class="value green" id="following">-</div></div>
-  </div>
+    <p class="note">
+      Data riwayat seperti tanggal bergabung dan waktu perubahan nama tidak selalu disediakan API. Data yang tidak tersedia tidak akan dibuat-buat.
+    </p>
+  </section>
 
-  <div class="details">
-    <h3>🪪 Informasi Akun</h3>
-    <div class="row"><span>Username</span><span id="dusername">-</span></div>
-    <div class="row"><span>Nickname</span><span id="dnickname">-</span></div>
-    <div class="row"><span>User ID</span><span id="uid">-</span></div>
-    <div class="row"><span>Joined TikTok</span><span id="joined">Tidak tersedia</span></div>
-    <div class="row"><span>Language</span><span id="language">Tidak tersedia</span></div>
-    <div class="row"><span>Region</span><span id="dregion">Tidak tersedia</span></div>
-    <div class="row"><span>Friends</span><span id="friends">Tidak tersedia</span></div>
-  </div>
-
-  <div class="details">
-    <h3>📈 Engagement</h3>
-    <div class="row"><span>Heart per Followers</span><span id="hpf">-</span></div>
-    <div class="row"><span>Est. Engagement</span><span id="engagement">Tidak tersedia</span></div>
-  </div>
-
-  <div class="details">
-    <h3>🔄 Riwayat Perubahan</h3>
-    <div class="row"><span>Nickname Update</span><span>Tidak tersedia</span></div>
-    <div class="row"><span>Username Update</span><span>Tidak tersedia</span></div>
-  </div>
-
-  <div class="details">
-    <h3>🛡️ Status</h3>
-    <div class="row"><span>Sumber data</span><span id="source">-</span></div>
-    <div class="row"><span>Status profil</span><span id="profileStatus">-</span></div>
-  </div>
-</section>
-
-<footer>
-  <b>ZAL ANALYTICS</b><br>
-  Tidak berafiliasi dengan TikTok.<br>
-  Data mengikuti ketersediaan layanan API.
-</footer>
-</div>
+  <div class="footer">ZAL PROFILE TOOLS � Informasi bergantung pada layanan pihak ketiga</div>
+</main>
 
 <script>
-(function(){
+(function () {
   "use strict";
 
-  const $ = id => document.getElementById(id);
-
-  // API publik pihak ketiga. Dapat berubah atau membatasi akses.
-  const API = "https://www.tikwm.com/api/user/info";
-
-  let profileLink = "";
-  let lastReport = null;
-  let busy = false;
-
-  function showStatus(message, type){
-    const box = $("status");
-    box.className = "status show " + (type || "");
-    box.textContent = message;
+  function byId(id) {
+    return document.getElementById(id);
   }
 
-  function setText(id, value){
-    $(id).textContent =
-      value === null || value === undefined || value === ""
-      ? "Tidak tersedia" : String(value);
+  var checkButton = byId("checkBtn");
+  var usernameInput = byId("username");
+  var statusBox = byId("status");
+  var resultsBox = byId("results");
+
+  function showStatus(message, type) {
+    statusBox.textContent = message;
+    statusBox.className = type || "info";
+    statusBox.style.display = "block";
   }
 
-  function pick(obj, keys){
-    if(!obj) return null;
-    for(const key of keys){
-      if(obj[key] !== undefined && obj[key] !== null && obj[key] !== ""){
-        return obj[key];
-      }
-    }
-    return null;
+  function formatNumber(value) {
+    var number = Number(value);
+    if (!Number.isFinite(number)) return "-";
+    return number.toLocaleString("id-ID");
   }
 
-  function toNumber(value){
-    if(value === null || value === undefined || value === "") return null;
-    const n = Number(value);
-    return Number.isFinite(n) && n >= 0 ? n : null;
+  function setText(id, value) {
+    byId(id).textContent =
+      value !== undefined && value !== null && value !== ""
+        ? String(value)
+        : "Tidak tersedia";
   }
 
-  function fmt(value){
-    const n = toNumber(value);
-    return n === null ? "Tidak tersedia" :
-      new Intl.NumberFormat("id-ID").format(n);
+  function getProfileData(json) {
+    if (!json || typeof json !== "object") return null;
+    return json.data || json.user || json;
   }
 
-  function compact(value){
-    const n = toNumber(value);
-    return n === null ? "Tidak tersedia" :
-      new Intl.NumberFormat("id-ID", {
-        notation:"compact", maximumFractionDigits:2
-      }).format(n);
-  }
+  async function checkProfile() {
+    // Langsung memberikan respons agar pengguna tahu tombol berfungsi.
+    resultsBox.style.display = "none";
 
-  function dateFormat(value){
-    if(value === null || value === undefined || value === "") return null;
-    let n = Number(value), date;
-    if(Number.isFinite(n) && n > 0){
-      if(n < 1e12) n *= 1000;
-      date = new Date(n);
-    } else {
-      date = new Date(value);
-    }
-    if(Number.isNaN(date.getTime())) return null;
-    return date.toLocaleDateString("id-ID", {
-      day:"numeric", month:"long", year:"numeric"
-    });
-  }
+    var username = usernameInput.value.trim().replace(/^@+/, "");
 
-  function parseUsername(raw){
-    let value = raw.trim();
-
-    if(!value) throw Error("Masukkan username TikTok terlebih dahulu.");
-
-    if(/^https?:\/\//i.test(value)){
-      let url;
-      try { url = new URL(value); }
-      catch(e){ throw Error("Link tidak valid."); }
-
-      if(!/(^|\.)tiktok\.com$/i.test(url.hostname)){
-        throw Error("Gunakan link dari tiktok.com.");
-      }
-
-      const match = url.pathname.match(/\/@([^/]+)/);
-      if(!match) throw Error("Username tidak ditemukan dalam link.");
-      value = match[1];
+    if (!username) {
+      showStatus("Masukkan username TikTok terlebih dahulu.", "error");
+      usernameInput.focus();
+      return;
     }
 
-    value = value.replace(/^@/, "").trim();
-
-    if(!/^[a-zA-Z0-9._]+$/.test(value)){
-      throw Error("Username tidak valid. Hapus spasi dan coba lagi.");
+    if (!/^[a-zA-Z0-9._]+$/.test(username)) {
+      showStatus("Username tidak valid. Masukkan username saja, tanpa link TikTok.", "error");
+      usernameInput.focus();
+      return;
     }
 
-    return value;
-  }
+    checkButton.disabled = true;
+    checkButton.textContent = "SEDANG MEMERIKSA...";
+    showStatus("Tombol berfungsi. Sedang mencoba mengambil data @" + username + "...", "info");
 
-  async function fetchAPI(url){
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 15000);
+    var controller = new AbortController();
+    var timeout = setTimeout(function () {
+      controller.abort();
+    }, 15000);
 
-    try{
-      const response = await fetch(url, {
-        method:"GET",
-        headers:{"Accept":"application/json"},
-        cache:"no-store",
-        signal:controller.signal
+    try {
+      var endpoint =
+        "https://www.tikwm.com/api/user/info?unique_id=" +
+        encodeURIComponent(username);
+
+      var response = await fetch(endpoint, {
+        method: "GET",
+        headers: { "Accept": "application/json" },
+        signal: controller.signal,
+        cache: "no-store"
       });
 
-      if(!response.ok){
-        throw Error("Server API mengembalikan HTTP " + response.status + ".");
+      if (!response.ok) {
+        throw new Error("Layanan API membalas HTTP " + response.status + ".");
       }
 
-      return await response.json();
+      var json = await response.json();
 
-    }catch(error){
-      if(error.name === "AbortError"){
-        throw Error("Waktu tunggu habis. Coba lagi.");
+      if (json && json.code !== undefined && Number(json.code) !== 0) {
+        throw new Error(json.msg || json.message || "API tidak dapat menemukan profil tersebut.");
       }
 
-      if(error instanceof TypeError){
-        throw Error(
-          "Permintaan API gagal. Kemungkinan CORS, koneksi internet, " +
-          "atau server API bermasalah. GitHub Pages tidak bisa memperbaiki CORS."
+      var data = getProfileData(json);
+
+      if (!data) {
+        throw new Error("Format data profil dari API tidak dikenali.");
+      }
+
+      // Mendukung beberapa bentuk respons API yang berbeda.
+      var user = data.user || data.user_info || data;
+      var stats = data.stats || data.statistics || user.stats || user.statistics || data;
+
+      var returnedUsername =
+        user.unique_id || user.username || user.uniqueId || username;
+
+      var nickname =
+        user.nickname || user.display_name || user.displayName || returnedUsername;
+
+      var followers = stats.follower_count ?? stats.followerCount ?? stats.followers;
+      var following = stats.following_count ?? stats.followingCount ?? stats.following;
+      var hearts = stats.total_favorited ?? stats.heart_count ?? stats.likes_count ??
+                   stats.heartCount ?? stats.likes ?? stats.hearts;
+      var videos = stats.video_count ?? stats.videoCount ?? stats.videos;
+      var userId = user.id ?? user.uid ?? user.user_id ?? user.open_id;
+
+      if (
+        followers === undefined &&
+        following === undefined &&
+        hearts === undefined &&
+        videos === undefined &&
+        !nickname
+      ) {
+        throw new Error("Profil tidak ditemukan atau data tidak tersedia.");
+      }
+
+      setText("nickname", nickname);
+      setText("handle", "@" + returnedUsername);
+      setText("userId", userId);
+      setText("followers", followers === undefined ? "-" : formatNumber(followers));
+      setText("following", following === undefined ? "-" : formatNumber(following));
+      setText("hearts", hearts === undefined ? "-" : formatNumber(hearts));
+      setText("videos", videos === undefined ? "-" : formatNumber(videos));
+
+      var friendCount = "-";
+      if (followers !== undefined && following !== undefined) {
+        friendCount = formatNumber(Math.min(Number(followers), Number(following)));
+      }
+      setText("friends", friendCount);
+
+      var ratio = "-";
+      if (followers !== undefined && Number(followers) > 0 && hearts !== undefined) {
+        ratio = (Number(hearts) / Number(followers)).toFixed(2);
+      }
+      setText("heartRatio", ratio);
+
+      // Estimasi ini hanya rasio total likes terhadap followers, bukan engagement rate per post.
+      var engagement = "-";
+      if (followers !== undefined && Number(followers) > 0 && hearts !== undefined) {
+        engagement = ((Number(hearts) / Number(followers)) * 100).toFixed(2) + "%";
+      }
+      setText("engagement", engagement);
+
+      setText("joined", user.create_time ? "Data tersedia" : "Tidak tersedia");
+      setText("language", user.language || user.lang || "Tidak tersedia");
+      setText("nicknameUpdate", "Tidak tersedia");
+      setText("usernameUpdate", "Tidak tersedia");
+
+      byId("avatar").textContent = (String(nickname).charAt(0) || "T").toUpperCase();
+      resultsBox.style.display = "block";
+      showStatus("Berhasil mengambil respons API untuk @" + returnedUsername + ".", "success");
+
+    } catch (error) {
+      if (error && error.name === "AbortError") {
+        showStatus(
+          "Permintaan terlalu lama (lebih dari 15 detik). API mungkin lambat atau tidak merespons. Coba lagi nanti.",
+          "error"
+        );
+      } else if (error instanceof TypeError) {
+        showStatus(
+          "Tidak bisa terhubung ke API. Kemungkinan koneksi internet, CORS, atau layanan TikWM sedang bermasalah. GitHub Pages tidak bisa memperbaiki CORS dari sisi server.",
+          "error"
+        );
+      } else {
+        showStatus(
+          "Gagal mengambil profil: " + (error.message || "Kesalahan tidak diketahui"),
+          "error"
         );
       }
-
-      throw error;
-    }finally{
-      clearTimeout(timer);
+    } finally {
+      clearTimeout(timeout);
+      checkButton.disabled = false;
+      checkButton.textContent = "CEK PROFIL SEKARANG";
     }
   }
 
-  // Event dipasang langsung saat script dimuat.
-  // Tidak memakai onclick inline agar lebih mudah didiagnosis.
-  $("checkBtn").addEventListener("click", checkProfile);
+  // Event didaftarkan setelah elemen HTML tersedia.
+  checkButton.addEventListener("click", checkProfile);
 
-  $("username").addEventListener("keydown", function(event){
-    if(event.key === "Enter"){
+  // Enter pada kolom username juga menjalankan pemeriksaan.
+  usernameInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
       event.preventDefault();
       checkProfile();
     }
   });
 
-  async function checkProfile(){
-    if(busy) return;
-
-    let username;
-    try{
-      username = parseUsername($("username").value);
-    }catch(error){
-      showStatus("❌ " + error.message, "error");
-      return;
-    }
-
-    busy = true;
-    $("checkBtn").disabled = true;
-    $("checkBtn").textContent = "MENGAMBIL DATA...";
-    $("results").classList.remove("show");
-
-    showStatus("Menghubungkan ke API untuk memeriksa @" + username + "...", "");
-
-    try{
-      const endpoint = API + "?unique_id=" + encodeURIComponent(username);
-      const json = await fetchAPI(endpoint);
-
-      if(!json || typeof json !== "object"){
-        throw Error("Respons API tidak valid.");
-      }
-
-      if(json.code !== undefined && Number(json.code) !== 0){
-        throw Error(json.msg || json.message || "API gagal menemukan profil.");
-      }
-
-      const data = json.data || json;
-      const user = data.user || data.user_info;
-      const stats = data.stats || data.userStats || data.user_stats || {};
-
-      if(!user || typeof user !== "object"){
-        throw Error(
-          "API tidak mengembalikan data profil. Periksa username atau coba lagi nanti."
-        );
-      }
-
-      render(user, stats, data, username);
-      $("results").classList.add("show");
-      showStatus("✅ Data berhasil diterima dari API.", "success");
-
-    }catch(error){
-      showStatus("❌ " + error.message, "error");
-    }finally{
-      busy = false;
-      $("checkBtn").disabled = false;
-      $("checkBtn").textContent = "🔍 CEK PROFIL SEKARANG";
-    }
-  }
-
-  function render(user, stats, data, searchedUsername){
-    const username = pick(user, ["unique_id","uniqueId","username"]) || searchedUsername;
-    const nickname = pick(user, ["nickname","nick_name","display_name"]);
-    const uid = pick(user, ["id","uid","user_id","userId"]);
-    const avatar = pick(user, ["avatar","avatarLarger","avatar_larger","avatarMedium","avatar_medium"]);
-    const bio = pick(user, ["signature","bio","desc"]);
-    const region = pick(user, ["region","country_code","countryCode","country"]);
-    const language = pick(user, ["language","language_code","lang"]);
-
-    const followers = toNumber(pick(stats, ["followerCount","follower_count","followers"]));
-    const following = toNumber(pick(stats, ["followingCount","following_count","following"]));
-    const hearts = toNumber(pick(stats, ["heartCount","heart_count","total_favorited","heart","likes"]));
-    const videos = toNumber(pick(stats, ["videoCount","video_count","aweme_count","videos"]));
-    const friends = toNumber(pick(stats, ["friendCount","friend_count","friends"]));
-
-    const joined = dateFormat(pick(user, [
-      "createTime","create_time","created_at","createdAt","register_time"
-    ]));
-
-    setText("nickname", nickname || username);
-    setText("handle", "@" + username);
-    setText("bio", bio || "Bio tidak tersedia.");
-    setText("region", "🌍 Region: " + (region || "Tidak tersedia"));
-
-    profileLink = "https://www.tiktok.com/@" + encodeURIComponent(username);
-
-    const img = $("avatar");
-    img.onerror = function(){
-      img.onerror = null;
-      img.removeAttribute("src");
-    };
-    if(avatar && /^https?:\/\//i.test(String(avatar))) img.src = avatar;
-    else img.removeAttribute("src");
-
-    setText("followers", compact(followers));
-    setText("hearts", compact(hearts));
-    setText("videos", compact(videos));
-    setText("following", compact(following));
-
-    setText("dusername", "@" + username);
-    setText("dnickname", nickname);
-    setText("uid", uid);
-    setText("joined", joined);
-    setText("language", language);
-    setText("dregion", region);
-    setText("friends", fmt(friends));
-
-    if(followers !== null && followers > 0 && hearts !== null){
-      setText("hpf", ((hearts/followers)*100).toLocaleString("id-ID",{
-        maximumFractionDigits:2
-      }) + "%");
-    }else{
-      setText("hpf", "Data tidak cukup");
-    }
-
-    // Jangan mengarang engagement jika data interaksi video tidak ada.
-    const videosList = Array.isArray(data.aweme_list) ? data.aweme_list :
-      Array.isArray(data.videos) ? data.videos : [];
-
-    const interactions = videosList.slice(0,10).map(video => {
-      const s = video.statistics || video.stats || {};
-      const likes = toNumber(pick(s,["digg_count","like_count","likes"]));
-      const comments = toNumber(pick(s,["comment_count","comments"]));
-      const shares = toNumber(pick(s,["share_count","shares"]));
-      if(likes === null || comments === null || shares === null) return null;
-      return likes + comments + shares;
-    }).filter(n => n !== null);
-
-    if(interactions.length && followers > 0){
-      const avg = interactions.reduce((a,b)=>a+b,0)/interactions.length;
-      setText("engagement", ((avg/followers)*100).toLocaleString("id-ID",{
-        maximumFractionDigits:2
-      }) + "%");
-    }else{
-      setText("engagement", "Data video tidak tersedia");
-    }
-
-    setText("source", "TikWM API");
-    setText("profileStatus", "Respons berhasil diterima");
-
-    lastReport = {
-      username,nickname,uid,region,language,joined,
-      followers,following,hearts,videos,friends
-    };
-  }
-
-  $("openBtn").addEventListener("click", function(){
-    if(profileLink) window.open(profileLink, "_blank", "noopener,noreferrer");
-  });
-
-  $("copyBtn").addEventListener("click", async function(){
-    if(!lastReport){
-      showStatus("Belum ada hasil yang bisa disalin.", "error");
-      return;
-    }
-
-    const d = lastReport;
-    const output = [
-      "ZAL TIKTOK REGION CHECKER",
-      "Username: @" + d.username,
-      "Nickname: " + (d.nickname || "Tidak tersedia"),
-      "User ID: " + (d.uid ?? "Tidak tersedia"),
-      "Region: " + (d.region || "Tidak tersedia"),
-      "Language: " + (d.language || "Tidak tersedia"),
-      "Joined: " + (d.joined || "Tidak tersedia"),
-      "Followers: " + fmt(d.followers),
-      "Heart: " + fmt(d.hearts),
-      "Video: " + fmt(d.videos),
-      "Following: " + fmt(d.following),
-      "Friends: " + fmt(d.friends),
-      "Heart per Followers: " + $("hpf").textContent,
-      "Est. Engagement: " + $("engagement").textContent,
-      "Profile: " + profileLink
-    ].join("\n");
-
-    try{
-      if(navigator.clipboard && window.isSecureContext){
-        await navigator.clipboard.writeText(output);
-      }else{
-        const area = document.createElement("textarea");
-        area.value = output;
-        area.style.position = "fixed";
-        area.style.opacity = "0";
-        document.body.appendChild(area);
-        area.select();
-        const ok = document.execCommand("copy");
-        area.remove();
-        if(!ok) throw Error("Clipboard gagal.");
-      }
-      showStatus("✅ Hasil berhasil disalin.", "success");
-    }catch(error){
-      showStatus("Gagal menyalin hasil. Buka website melalui HTTPS.", "error");
-    }
-  }
-
+  // Menunjukkan bahwa JavaScript berhasil dimuat.
+  showStatus("Siap. Masukkan username lalu tekan tombol cek.", "info");
 })();
 </script>
 </body>
