@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#080b18">
+
+<title>ZAL TikTok Region Checker</title>
+
+<style>
+:root {
+  --bg: #080b18;
+  --panel: #11172a;
+  --panel2: #171e35;
+  --blue: #00d9ff;
+  --purple: #8b5cf6;
+  --text: #f3f6ff;
+  --muted: #8b96b5;
+  --green: #38e8a7;
+  --red: #ff5577;
+  --border: rgba(255,255,255,.08);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(ellipse at 10% 0%, #172653 0%, transparent 38%),
+    radial-gradient(ellipse at 100% 25%, #24134c 0%, transparent 35%),
+    var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+button, input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.container {
+  width: 100%;
+  max-width: 850px;
+  padding: 20px 15px 40px;
+  margin: auto;
+}
+
+/* HEADER */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  width: 49px;
+  height: 49px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  font-size: 23px;
+  font-weight: 900;
+  color: white;
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  box-shadow: 0 0 25px #00d9ff35;
+}
+
+.brand h1 {
+  font-size: 18px;
+  margin: 0;
+  letter-spacing: .5px;
+}
+
+.brand p {
+  color: var(--muted);
+  font-size: 11px;
+  margin: 5px 0 0;
+}
+
+.online {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #38e8a72b;
+  color: var(--green);
+  background: #38e8a710;
+  border-radius: 30px;
+  padding: 8px 10px;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  background: var(--green);
+  border-radius: 50%;
+}
+
+/* HERO */
+
+.hero {
+  margin-bottom: 22px;
+}
+
+.tag {
+  display: inline-block;
+  color: var(--blue);
+  background: #00d9ff12;
+  border: 1px solid #00d9ff35;
+  border-radius: 7px;
+  padding: 6px 9px;
+  font-size: 10px;
+  letter-spacing: 1px;
+  font-weight: bold;
+  margin-bottom: 13px;
+}
+
+.hero h2 {
+  font-size: clamp(27px, 7vw, 39px);
+  line-height: 1.12;
+  margin: 0;
+  letter-spacing: -1px;
+}
+
+.hero h2 span {
+  background: linear-gradient(90deg, var(--blue), #a78bfa);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.hero p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 12px 0 0;
+}
+
+/* SEARCH */
+
+.search-box {
+  background: linear-gradient(145deg, #151e37, #101529);
+  border: 1px solid #253354;
+  border-radius: 20px;
+  padding: 17px;
+  box-shadow: 0 15px 45px #00000020;
+}
+
+.label {
+  display: block;
+  color: #cbd5f5;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 13px;
+  background: #080d1d;
+  border: 1px solid #273553;
+  border-radius: 12px;
+  min-height: 52px;
+  transition: .2s;
+}
+
+.input-wrap:focus-within {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px #00d9ff12;
+}
+
+.search-icon {
+  font-size: 19px;
+  color: var(--blue);
+}
+
+.input-wrap input {
+  width: 100%;
+  min-width: 0;
+  background: transparent;
+  outline: none;
+  border: none;
+  color: white;
+  font-size: 14px;
+}
+
+.input-wrap input::placeholder {
+  color: #66718f;
+}
+
+.clear-btn {
+  background: transparent;
+  color: #8b96b5;
+  border: none;
+  font-size: 20px;
+  padding: 5px;
+}
+
+.main-btn {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  padding: 15px;
+  margin-top: 13px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #06101d;
+  background: linear-gradient(100deg, var(--blue), #8b8aff);
+  box-shadow: 0 7px 25px #00d9ff20;
+  transition: .2s;
+}
+
+.main-btn:active {
+  transform: scale(.98);
+}
+
+.main-btn:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+.search-help {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+  margin: 11px 0 0;
+}
+
+/* STATUS */
+
+.status {
+  display: none;
+  margin-top: 15px;
+  padding: 13px;
+  border-radius: 12px;
+  background: #10182c;
+  border: 1px solid var(--border);
+  font-size: 12px;
+  line-height: 1.6;
+  color: #dbe7ff;
+}
+
+.status.show {
+  display: block;
+}
+
+.status.error {
+  color: #ff91a8;
+  border-color: #ff557733;
+}
+
+.status.success {
+  color: var(--green);
+  border-color: #38e8a733;
+}
+
+.spinner {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  border: 2px solid #ffffff30;
+  border-top-color: var(--blue);
+  border-radius: 50%;
+  vertical-align: -2px;
+  margin-right: 8px;
+  animation: spin .7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* RESULTS */
+
+.results {
+  display: none;
+  margin-top: 25px;
+}
+
+.results.show {
+  display: block;
+  animation: appear .35s ease;
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.section-heading h3 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.section-heading small {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.profile-card {
+  border: 1px solid #293653;
+  border-radius: 20px;
+  padding: 18px;
+  background:
+    radial-gradient(circle at 100% 0%, #47318a38, transparent 45%),
+    linear-gradient(140deg, #151d35, #101426);
+  margin-bottom: 17px;
+}
+
+.profile-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.avatar {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  border: 2px solid #00d9ff;
+  object-fit: cover;
+  background: #202b49;
+  box-shadow: 0 0 22px #00d9ff20;
+  flex-shrink: 0;
+}
+
+.profile-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.profile-info h3 {
+  margin: 0;
+  font-size: 18px;
+  overflow-wrap: anywhere;
+}
+
+.profile-info p {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 7px 0;
+  overflow-wrap: anywhere;
+}
+
+.region-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 9px;
+  border-radius: 8px;
+  background: #00d9ff12;
+  color: var(--blue);
+  font-size: 11px;
+  border: 1px solid #00d9ff28;
+}
+
+.bio {
+  color: #b4bfdc;
+  font-size: 12px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+  margin: 15px 0 0;
+  white-space: pre-wrap;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 9px;
+  margin-top: 16px;
+}
+
+.small-btn {
+  flex: 1;
+  border: 1px solid #30405f;
+  border-radius: 10px;
+  color: #dce7ff;
+  background: #18223a;
+  padding: 11px 8px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.small-btn:active {
+  transform: scale(.98);
+}
+
+/* STATS */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 11px;
+  margin-bottom: 23px;
+}
+
+.stat {
+  background: linear-gradient(140deg, #151c31, #101526);
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  padding: 15px;
+  min-width: 0;
+}
+
+.stat-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 13px;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: #a6b1cf;
+}
+
+.stat-icon {
+  font-size: 17px;
+}
+
+.stat-value {
+  font-size: clamp(18px, 5vw, 25px);
+  font-weight: 800;
+  letter-spacing: -.5px;
+  overflow-wrap: anywhere;
+}
+
+.stat-note {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 7px;
+}
+
+.blue { color: var(--blue); }
+.purple { color: #b69bff; }
+.pink { color: #ff83b7; }
+.green { color: var(--green); }
+
+/* DETAIL */
+
+.detail-card {
+  background: #11172a;
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  overflow: hidden;
+  margin-bottom: 17px;
+}
+
+.detail-title {
+  padding: 15px;
+  font-size: 13px;
+  font-weight: bold;
+  border-bottom: 1px solid var(--border);
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 13px 15px;
+  border-bottom: 1px solid #ffffff08;
+  font-size: 12px;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row span:first-child {
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.detail-row span:last-child {
+  text-align: right;
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}
+
+.unavailable {
+  color: #8994af !important;
+  font-weight: normal !important;
+}
+
+.analysis-box {
+  background: linear-gradient(140deg, #142238, #17152f);
+  border: 1px solid #34406b;
+  border-radius: 17px;
+  padding: 17px;
+  margin-bottom: 17px;
+}
+
+.analysis-box h3 {
+  font-size: 15px;
+  margin: 0 0 15px;
+}
+
+.analysis-metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 13px 0;
+  font-size: 12px;
+}
+
+.analysis-metric span:first-child {
+  color: #b0bddb;
+}
+
+.analysis-metric strong {
+  font-size: 15px;
+  text-align: right;
+}
+
+.bar-bg {
+  height: 7px;
+  width: 100%;
+  border-radius: 20px;
+  background: #080d1c;
+  overflow: hidden;
+  margin-top: 9px;
+}
+
+.bar {
+  height: 100%;
+  width: 0;
+  border-radius: 20px;
+  background: linear-gradient(90deg, var(--blue), var(--purple));
+  transition: width .5s;
+}
+
+.notice {
+  padding: 14px;
+  background: #0d1325;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: #9eabc9;
+  font-size: 11px;
+  line-height: 1.8;
+  margin-top: 15px;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  color: #697594;
+  font-size: 10px;
+  line-height: 1.8;
+}
+
+@media (min-width: 600px) {
+  .container {
+    padding: 30px 24px 45px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .stat {
+    padding: 14px 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .online {
+    font-size: 9px;
+    padding: 7px;
+  }
+
+  .brand h1 {
+    font-size: 15px;
+  }
+
+  .profile-card {
+    padding: 13px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <header class="header">
+    <div class="brand">
+      <div class="logo">Z</div>
+      <div>
+        <h1>ZAL ANALYTICS</h1>
+        <p>TIKTOK PROFILE INTELLIGENCE</p>
+      </div>
+    </div>
+
+    <div class="online">
+      <span class="dot"></span>
+      PROFILE CHECKER
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="tag">✦ TIKTOK ANALYZER</div>
+    <h2>Discover Your<br><span>TikTok Profile.</span></h2>
+    <p>
+      Periksa informasi profil, statistik akun, bahasa,
+      data engagement, dan informasi region yang tersedia
+      dari profil TikTok publik.
+    </p>
+  </section>
+
+  <section class="search-box">
+    <label class="label" for="username">USERNAME ATAU LINK PROFIL TIKTOK</label>
+
+    <div class="input-wrap">
+      <span class="search-icon">⌕</span>
+      <input
+        id="username"
+        type="text"
+        placeholder="@username_tiktok"
+        autocomplete="off"
+        autocapitalize="none"
+        spellcheck="false"
+      >
+      <button class="clear-btn" id="clearBtn" type="button" aria-label="Hapus">×</button>
+    </div>
+
+    <button class="main-btn" id="checkBtn" type="button">
+      🔍 CEK PROFIL SEKARANG
+    </button>
+
+    <p class="search-help">
+      Masukkan username tanpa password. Contoh:
+      <b>@tiktok</b> atau link profil TikTok.
+    </p>
+  </section>
+
+  <div id="status" class="status" role="status" aria-live="polite"></div>
+
+  <section id="results" class="results">
+
+    <div class="section-heading">
+      <h3>📊 Hasil Analisis</h3>
+      <small id="checkedAt">Menunggu data...</small>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-top">
+        <img id="avatar" class="avatar" alt="Foto profil" src="">
+        <div class="profile-info">
+          <h3 id="nickname">-</h3>
+          <p id="handle">@-</p>
+          <div class="region-badge" id="region">🌍 Region: Tidak tersedia</div>
+        </div>
+      </div>
+
+      <p class="bio" id="bio"></p>
+
+      <div class="profile-actions">
+        <button class="small-btn" id="openProfile" type="button">
+          ↗ Buka Profil
+        </button>
+        <button class="small-btn" id="copyBtn" type="button">
+          ▣ Salin Hasil
+        </button>
+      </div>
+    </div>
+
+    <div class="section-heading">
+      <h3>👥 Account Engagement</h3>
+      <small>Statistik publik</small>
+    </div>
+
+    <div class="stats-grid">
+
+      <div class="stat">
+        <div class="stat-top">
+          <span class="stat-label">Followers</span>
+          <span class="stat-icon">👥</span>
+        </div>
+        <div class="stat-value blue" id="followers">-</div>
+        <div class="stat-note">Pengikut akun</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-top">
+          <span class="stat-label">Heart / Likes</span>
+          <span class="stat-icon">❤️</span>
+        </div>
+        <div class="stat-value pink" id="hearts">-</div>
+        <div class="stat-note">Total likes yang tercatat</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-top">
+          <span class="stat-label">Videos</span>
+          <span class="stat-icon">🎬</span>
+        </div>
+        <div class="stat-value purple" id="videos">-</div>
+        <div class="stat-note">Jumlah video</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-top">
+          <span class="stat-label">Following</span>
+          <span class="stat-icon">➕</span>
+        </div>
+        <div class="stat-value green" id="following">-</div>
+        <div class="stat-note">Akun yang diikuti</div>
+      </div>
+
+    </div>
+
+    <div class="analysis-box">
+      <h3>📈 Engagement Analysis</h3>
+
+      <div class="analysis-metric">
+        <span>Heart per Followers</span>
+        <strong class="blue" id="heartPerFollower">-</strong>
+      </div>
+      <div class="bar-bg">
+        <div class="bar" id="heartBar"></div>
+      </div>
+
+      <div class="analysis-metric">
+        <span>Estimated Engagement Rate</span>
+        <strong class="green" id="engagement">-</strong>
+      </div>
+      <div class="bar-bg">
+        <div class="bar" id="engagementBar"></div>
+      </div>
+
+      <div class="notice">
+        <b>Perlu diketahui:</b><br>
+        Heart per followers dihitung dari total heart dibagi followers.
+        Angka ini bukan engagement rate per video.
+        Estimasi engagement rate yang akurat membutuhkan data likes,
+        komentar, dan jumlah views dari beberapa video terbaru.
+        Jika data video tidak tersedia, aplikasi tidak akan mengarang
+        angka engagement.
+      </div>
+    </div>
+
+    <div class="detail-card">
+      <div class="detail-title">🪪 Informasi Akun</div>
+
+      <div class="detail-row">
+        <span>Username</span>
+        <span id="dUsername">-</span>
+      </div>
+
+      <div class="detail-row">
+        <span>Nickname</span>
+        <span id="dNickname">-</span>
+      </div>
+
+      <div class="detail-row">
+        <span>User ID</span>
+        <span id="userId">-</span>
+      </div>
+
+      <div class="detail-row">
+        <span>Joined TikTok</span>
+        <span id="joined">Tidak tersedia</span>
+      </div>
+
+      <div class="detail-row">
+        <span>Language</span>
+        <span id="language">Tidak tersedia</span>
+      </div>
+
+      <div class="detail-row">
+        <span>Region / Country</span>
+        <span id="dRegion">Tidak tersedia</span>
+      </div>
+
+      <div class="detail-row">
+        <span>Friends</span>
+        <span id="friends">Tidak tersedia</span>
+      </div>
+    </div>
+
+    <div class="detail-card">
+      <div class="detail-title">🔄 Riwayat Perubahan Profil</div>
+
+      <div class="detail-row">
+        <span>Nickname Update</span>
+        <span id="nicknameUpdate">Riwayat tidak tersedia</span>
+      </div>
+
+      <div class="detail-row">
+        <span>Username Update</span>
+        <span id="usernameUpdate">Riwayat tidak tersedia</span>
+      </div>
+
+      <div class="notice">
+        Riwayat perubahan username dan nickname tidak sama dengan
+        nama pengguna saat ini. Informasi tersebut hanya dapat
+        ditampilkan jika ada sumber data riwayat yang valid.
+        API profil biasa umumnya tidak menyediakan riwayat perubahan.
+      </div>
+    </div>
+
+    <div class="section-heading">
+      <h3>🛡️ Status Data</h3>
+    </div>
+
+    <div class="detail-card">
+      <div class="detail-row">
+        <span>Sumber data</span>
+        <span id="sourceStatus">-</span>
+      </div>
+
+      <div class="detail-row">
+        <span>Status profil</span>
+        <span id="profileStatus">-</span>
+      </div>
+
+      <div class="detail-row">
+        <span>Kelengkapan data</span>
+        <span id="dataCompleteness">-</span>
+      </div>
+    </div>
+
+  </section>
+
+  <footer class="footer">
+    <b>ZAL ANALYTICS</b><br>
+    TikTok Profile Checker · Unofficial third-party data<br>
+    Tidak berafiliasi dengan TikTok.
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  const API_URL = "https://www.tikwm.com/api/user/info";
+
+  const $ = id => document.getElementById(id);
+
+  const input = $("username");
+  const checkBtn = $("checkBtn");
+  const clearBtn = $("clearBtn");
+  const statusBox = $("status");
+  const results = $("results");
+
+  let currentProfileUrl = "";
+  let currentResult = null;
+
+  // -----------------------------
+  // BASIC HELPERS
+  // -----------------------------
+
+  function showStatus(message, type) {
+    statusBox.className = "status show " + (type || "");
+    statusBox.textContent = message;
+  }
+
+  function hideStatus() {
+    statusBox.className = "status";
+    statusBox.textContent = "";
+  }
+
+  function setText(id, value) {
+    $(id).textContent = value == null || value === ""
+      ? "Tidak tersedia"
+      : String(value);
+  }
+
+  function getFirst(obj, keys) {
+    if (!obj || typeof obj !== "object") return null;
+
+    for (const key of keys) {
+      const value = obj[key];
+
+      if (
+        value !== undefined &&
+        value !== null &&
+        value !== ""
+      ) {
+        return value;
+      }
+    }
+
+    return null;
+  }
+
+  function numberValue(value) {
+    if (value === undefined || value === null || value === "") {
+      return null;
+    }
+
+    const n = Number(value);
+
+    return Number.isFinite(n) && n >= 0 ? n : null;
+  }
+
+  function formatNumber(value) {
+    const n = numberValue(value);
+
+    if (n === null) return "Tidak tersedia";
+
+    return new Intl.NumberFormat("id-ID").format(n);
+  }
+
+  function formatCompact(value) {
+    const n = numberValue(value);
+
+    if (n === null) return "Tidak tersedia";
+
+    return new Intl.NumberFormat("id-ID", {
+      notation: "compact",
+      maximumFractionDigits: 2
+    }).format(n);
+  }
+
+  function formatPercent(value) {
+    if (!Number.isFinite(value)) return "Tidak tersedia";
+
+    return value.toLocaleString("id-ID", {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 0
+    }) + "%";
+  }
+
+  function setUnavailable(id, message) {
+    const el = $(id);
+    el.textContent = message || "Tidak tersedia";
+    el.classList.add("unavailable");
+  }
+
+  function setAvailable(id, value) {
+    const el = $(id);
+    el.textContent = value == null || value === ""
+      ? "Tidak tersedia"
+      : String(value);
+
+    el.classList.remove("unavailable");
+
+    if (value == null || value === "") {
+      el.classList.add("unavailable");
+    }
+  }
+
+  function setStat(id, value) {
+    $(id).textContent = formatCompact(value);
+  }
+
+  function formatDate(value) {
+    if (value === null || value === undefined || value === "") {
+      return null;
+    }
+
+    let date;
+
+    if (typeof value === "number" || /^\d+$/.test(String(value))) {
+      let n = Number(value);
+
+      // Unix timestamps are commonly seconds.
+      if (n > 0 && n < 100000000000) {
+        n *= 1000;
+      }
+
+      date = new Date(n);
+    } else {
+      date = new Date(value);
+    }
+
+    if (Number.isNaN(date.getTime())) return null;
+
+    return date.toLocaleDateString("id-ID", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric"
+    });
+  }
+
+  function normalizeUsername(raw) {
+    let value = raw.trim();
+
+    if (!value) {
+      throw new Error("Masukkan username atau link profil TikTok.");
+    }
+
+    if (/^https?:\/\//i.test(value)) {
+      let url;
+
+      try {
+        url = new URL(value);
+      } catch (_) {
+      
